@@ -1,0 +1,10 @@
+body {
+    text-align: center;
+}
+#content {
+    display: none;
+}
+
+span {
+    font-weight: bold;
+}
