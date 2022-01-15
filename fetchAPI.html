@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+    </head>
+    <body>
+        <ul id="post-blocks"></ul>
+        <script>
+            var posttopHeadlinesAPI = 'https://gnews.io/api/v4/top-headlines?token=e8d0307acd43e16c835cc29e1cda770c'
+            fetch (posttopHeadlinesAPI)
+                .then(function(response){
+                    return response.json();
+                })
+                .then(function(posts){
+                    let html = posts.articles.map(function(post){
+                        return `<li>
+                            <h2>${post.title}</h2>
+                            <p>${post.content}</p>
+                            </li> `
+                    })
+                    document.getElementById('post-blocks').innerHTML= html.join('');
+                });
+        </script>
+    </body>
+</html>
