@@ -4,7 +4,10 @@ body {
 #content {
     display: none;
 }
-
+#seemore {
+    align: center;
+    display: none;
+}
 span {
     font-weight: bold;
 }

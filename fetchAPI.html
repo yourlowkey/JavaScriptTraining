@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="fetchAPI.css" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        
+    </head>
+    <body>
+                <!-- Trigger/Open The Modal -->
+        <button id="myBtn">Open Modal</button>
+        <!-- The Modal -->
+        <div id="myModal" class="modal">
+        <!-- Modal content -->
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <form id ="search" action = "">
+                    <input type="text" class = 'input'/>
+                    <input type="submit" class = 'submitBtn'/> 
+                </form>
+            </div>
+        </div>
+
+        <!-- Display news -->
+        <div id ="searchContentContainer"></div>
+        <ul class="class-list"></ul>
+        <ul id="post-blocks"></ul>
+        
+        <!-- Script of getting top 10 news -->
+        <script>
+            const posttopHeadlinesAPI = 'https://gnews.io/api/v4/top-headlines?token=e8d0307acd43e16c835cc29e1cda770c'
+            
+            fetch (posttopHeadlinesAPI)
+                .then(function(response){
+                    return response.json();
+                })
+                .then(function(posts){
+                    let html = ''
+                    html = posts.articles.map(function(post){
+                        return`<li>
+                            <img src = ${post.image} </img>
+                            <h2><a href=${post.url} target="_blank" rel="noopener noreferrer">${post.title}</a></h2>
+                            <p>${post.publishedAt}</p>
+                            <p>${post.description}></p>
+                            </li> <br>`
+                        }).join ()
+                document.getElementById('post-blocks').innerHTML = html
+                    });   
+        </script>
+        
+        <!-- Script of getting searched content -->
+        <script>  
+            const searchFrom = document.getElementById('search');
+            const input = document.querySelector('.input');
+            const newlist = document.querySelector('.news-list') 
+            searchFrom.addEventListener ('submit', retrieve)
+
+            function retrieve(e){
+                e.preventDefault()
+                let topic = input.value;
+                let searchEndpointAPI = `https://gnews.io/api/v4/search?q=${topic}&token=e8d0307acd43e16c835cc29e1cda770c`
+                
+                fetch (searchEndpointAPI) 
+                    .then(function  (response){
+                    return response.json();
+                })
+                    .then(function(posts){
+                        htmlSearch = posts.articles.map(function(post){
+                            console.log(posts)
+                            return`<li>
+                            <img src = ${post.image} </img>
+                            <h2><a href=${post.url} target="_blank" rel="noopener noreferrer">${post.title}</a></h2>
+                            <p>${post.publishedAt}</p>
+                            <p>${post.description}></p>
+                            </li> <br>`
+                            
+                        }).join ()
+                document.getElementById('post-blocks').innerHTML = htmlSearch
+                    });   
+            }
+        </script>
+
+        <!-- Script of search modal  -->
+        <script> 
+            // Get the modal
+            var modal = document.getElementById("myModal");            
+            // Get the button that opens the modal
+            var btn = document.getElementById("myBtn");            
+            // Get the <span> element that closes the modal
+            var span = document.getElementsByClassName("close")[0];   
+            // Close the modal after submitting
+            var submitBtn = document.querySelector('.submitBtn');   
+            submitBtn.onclick = function() {
+                modal.style.display = "none";
+            }    
+            // When the user clicks the button, open the modal 
+            btn.onclick = function() {
+            modal.style.display = "block";
+            }            
+            // When the user clicks on <span> (x), close the modal
+            span.onclick = function() {
+            modal.style.display = "none";
+            }           
+            // When the user clicks anywhere outside of the modal, close it
+            window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+            }
+            </script>
+    </body>
+
+                            
+
+</html>
