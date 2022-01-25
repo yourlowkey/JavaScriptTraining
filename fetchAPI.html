@@ -7,8 +7,16 @@
         
     </head>
     <body>
-                <!-- Trigger/Open The Modal -->
-        <button id="myBtn">Open Modal</button>
+        <header>
+            <nav>
+                <ul id="nav-link" >
+            <li> My news</li>
+            <!-- Trigger/Open The Modal -->
+            <li><a href="#"  id ="myBtn" class="fa fa-fw fa-search"></a></li>
+                </ul>
+            </nav>
+        </header>
+      
         <!-- The Modal -->
         <div id="myModal" class="modal">
         <!-- Modal content -->
@@ -24,7 +32,7 @@
         <!-- Display news -->
         <div id ="searchContentContainer"></div>
         <ul class="class-list"></ul>
-        <ul id="post-blocks"></ul>
+        <div id="post-blocks"></div>
         
         <!-- Script of getting top 10 news -->
         <script>
@@ -35,14 +43,16 @@
                     return response.json();
                 })
                 .then(function(posts){
-                    let html = ''
-                    html = posts.articles.map(function(post){
-                        return`<li>
+                        html = posts.articles.map(function(post){
+                            console.log(posts)
+                            return`<li>
                             <img src = ${post.image} </img>
+                            <div>
                             <h2><a href=${post.url} target="_blank" rel="noopener noreferrer">${post.title}</a></h2>
                             <p>${post.publishedAt}</p>
-                            <p>${post.description}></p>
+                            <p>${post.description}></p></div>
                             </li> <br>`
+                            
                         }).join ()
                 document.getElementById('post-blocks').innerHTML = html
                     });   
@@ -69,9 +79,10 @@
                             console.log(posts)
                             return`<li>
                             <img src = ${post.image} </img>
+                            <div>
                             <h2><a href=${post.url} target="_blank" rel="noopener noreferrer">${post.title}</a></h2>
                             <p>${post.publishedAt}</p>
-                            <p>${post.description}></p>
+                            <p>${post.description}></p></div>
                             </li> <br>`
                             
                         }).join ()
